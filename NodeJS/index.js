@@ -23,7 +23,7 @@ const server = http.createServer((req, res) => {
     
     
     else if (req.url ==='/httmlFile') {
-        fs.readfile('HelloWorld.html', (err, data) => {
+        fs.readfile('HelloWorld.html', 'html', (err, data) => {
           res.end(data);
         })
     }
