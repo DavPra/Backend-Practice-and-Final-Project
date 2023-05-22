@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const http = require('http');
 const fs = require('fs');
+const qs = require('querystring');
 
 const con = mysql.createConnection({
     host: 'localhost',
@@ -18,7 +19,7 @@ const server = http.createServer((req, res) => {
 
     res.writeHead(200, {'Content-Type': 'text/html'} )
 
-    if (req.url === '/') {
+    if (req.method === 'GET' && req.url === '/') {
         con.query('SELECT * from Personen', (err, result) => {
 
             res.write('<table><thead><tr><td>Vorname</td><td>Nachname</td><td>Geburtsjahr</td></tr></thead><tbody>')
@@ -35,12 +36,28 @@ const server = http.createServer((req, res) => {
             fs.readFile('form.html', (err, data) => {
                 res.end(data)
             })
+
+        } else if (req.method === 'POST' && req.url === '/') {
+            let body = ''
+            req.on('data', (data) => {
+                
+                body += data
+            })
+            req.on('end', () => {
+                let post = qs.parse(body)
+                console.log(post)
+            })
+        
+
+
+
+
         } else {
             res.end('Invalid Request!')
         }
 
-    }
-)
+    
+    })
 
 server.listen(3000, 'localhost', () => {
 
