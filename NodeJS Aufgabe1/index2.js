@@ -29,7 +29,7 @@ const server = http.createServer((req, res) => {
                 res.write('<tr><td>' + r.firstName + '</td><td>' + r.lastName + '</td><td>' + r.birthyear + '</td></tr>')
             }
 
-                res.write('</tbody></table>')
+                res.write('</tbody></table><br><a href="/form">Neuen Eintrag anlegen</a>')
                 res.end()
             })
         } else if (req.url === '/form') {
@@ -46,6 +46,12 @@ const server = http.createServer((req, res) => {
             req.on('end', () => {
                 let post = qs.parse(body)
                 console.log(post)
+                con.query('INSERT into Personen (firstName, lastName, birthyear) values ("'+post.firstName+'", "'+post.lastName+'","'+parseInt(post.birthyear)+'")',
+                (err, result) => {
+                    res.writeHead(301, {
+                        Location: '/'
+                    }).end();
+                })
             })
         
 
