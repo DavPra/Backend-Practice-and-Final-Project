@@ -26,14 +26,21 @@ const server = http.createServer((req, res) => {
             for (let r of result) {
 
                 res.write('<tr><td>' + r.firstName + '</td><td>' + r.lastName + '</td><td>' + r.birthyear + '</td></tr>')
+            }
 
                 res.write('</tbody></table>')
                 res.end()
-            }
-        })
+            })
+        } else if (req.url === '/form') {
+            fs.readFile('form.html', (err, data) => {
+                res.end(data)
+            })
+        } else {
+            res.end('Invalid Request!')
+        }
 
     }
-})
+)
 
 server.listen(3000, 'localhost', () => {
 
