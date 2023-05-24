@@ -31,6 +31,10 @@ app.get('/api/user/:id', (req, res) => {
 
 app.post('/api/user', (req, res) => {
     console.log(req.body);
+    con.query(`INSERT INTO user (username, firstname, lastname, email, adress) VALUES ('${req.body.username}', '${req.body.firstname}', '${req.body.lastname}', '${req.body.email}', '${req.body.adress}')`, (err, result) => {
+        res.statusCode = 201;
+        res.send(JSON.stringify(req.body))
+    });
 });
 
 app.delete('/api/user/:id', (req, res) => {
