@@ -38,9 +38,11 @@ const server = http.createServer((req, res) => {
             });
             req.on('end', () => {
                 let json = JSON.parse(body);
+                console.log(json);
                 
                 const sql = 'INSERT INTO user (username, firstname, lastname, email, adress) VALUES ("${json.username}", "${json.firstname}", "${json.lastname}", "${json.email}", "${json.adress}")';
                 con.query(sql, (err, result) => {
+                    console.log(result);
                     if (err) throw err;
                     res.statusCode = 201;
                     res.end(body);
