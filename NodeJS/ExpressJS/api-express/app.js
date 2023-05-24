@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const db = require('mysql');
-const bodyParser = require('body-parser');
 
 const con= db.createConnection({
     host: 'localhost',
@@ -14,6 +13,8 @@ const con= db.createConnection({
 con.connect((err) => {
     if(err) console.log('Connection to database failed.');
 });
+
+app.use(express.json());
 
 app.get('/api/user', (req, res) => {
     con.query('SELECT * FROM user', (err, rows) => {
@@ -29,7 +30,7 @@ app.get('/api/user/:id', (req, res) => {
 });
 
 app.post('/api/user', (req, res) => {
-
+    console.log(req.body);
 });
 
 app.delete('/api/user/:id', (req, res) => {
