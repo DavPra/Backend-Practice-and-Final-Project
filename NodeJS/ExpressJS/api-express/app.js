@@ -14,7 +14,14 @@ con.connect((err) => {
     if(err) console.log('Connection to database failed.');
 });
 
+
+const headerMW = function(req, res, next) {
+    res.set('Content-Type', 'application/json');
+    next();
+}
+
 app.use(express.json());
+app.use(headerMW);
 
 app.get('/api/user', (req, res) => {
     con.query('SELECT * FROM user', (err, rows) => {
