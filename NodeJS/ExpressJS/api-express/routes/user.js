@@ -21,23 +21,26 @@ const headerMW = function(req, res, next) {
     next();
 }
 
+router.use((err, req, res, next) => {
+    res.status(500).send('Alles kaputt!');});
+
 router.use(express.json());
 router.use(headerMW);
 
-router.get('/api/user', (req, res) => {
+router.get('', (req, res) => {
     con.query('SELECT * FROM user', (err, result) => {
         res.send(JSON.stringify(result))
     });  
 });
 
-router.get('/api/user/:id', (req, res) => {
+router.get('/:id', (req, res) => {
     con.query(`SELECT * FROM user WHERE id =${req.params.id}`, (err, result) => {
         res.send(JSON.stringify(result[0]))
     });
 
 });
 
-router.post('/api/user', (req, res) => {
+router.post('', (req, res) => {
     console.log(req.body);
     con.query(`INSERT INTO user (username, firstname, lastname, email, adress) 
     VALUES ('${req.body.username}', '${req.body.firstname}', '${req.body.lastname}', '${req.body.email}', '${req.body.adress}')`, (err, result) => {
@@ -46,7 +49,7 @@ router.post('/api/user', (req, res) => {
     });
 });
 
-router.delete('/api/user/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
 
     con.query(`DELETE FROM user WHERE id =${parseInt(req.params.id)}`, (err, result) => {
         res.status(204).send('');
@@ -54,7 +57,7 @@ router.delete('/api/user/:id', (req, res) => {
 
 });
 
-router.put('/api/user/:id', (req, res) => {
+router.put('/:id', (req, res) => {
 
     con.query(`UPDATE user SET 
     username = '${req.body.username}', 
