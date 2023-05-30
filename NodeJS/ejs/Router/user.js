@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('mysql');
 
-const con= db.createConnection({
+const con = db.createConnection({
     host: 'localhost',
     port: '3306',
     user: 'root',
@@ -14,6 +14,8 @@ con.connect();
 
 router.get('/', (req, res) => {
     con.query(`SELECT * FROM user`, (err, result) => {
-        res.send(JSON.stringify(result))
+        res.render('user', {title: 'Ich bin ein Title'});
     });  
 });
+
+module.exports = router;
