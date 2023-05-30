@@ -5,6 +5,26 @@
     <title> <%= title %> </title>
 </head>
 <body>
-    Irgendwas
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Vorname</th>
+                <th>Nachname</th>
+                <th>Email</th>
+                <th>Adresse</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% users.forEach ((user) => { %>
+                <tr>
+                    <td> <%= users.username %> </td>
+                    <td> <%= users.vorname %> </td>
+                    <td> <%= users.nachname %> </td>
+                    <td> <%= users.email %> </td>
+                    <td> <%= users.adresse %> </td>
+                </tr>
+            <% }) %>
+    </table>
 </body>
 </html>

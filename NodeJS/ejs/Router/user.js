@@ -14,7 +14,7 @@ con.connect();
 
 router.get('/', (req, res) => {
     con.query(`SELECT * FROM user`, (err, result) => {
-        res.render('user', {title: 'Ich bin ein Title'});
+        res.render('user', {title: 'Ich bin ein Title', users: result});
     });  
 });
 
