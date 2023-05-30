@@ -7,11 +7,11 @@ const con= db.createConnection({
     port: '3306',
     user: 'root',
     password: '',
-    database: 'test_db'
+    database: 'testdb'
 });
 
 con.connect((err) => {
-    if(err) console.log('Connection to database failed.');
+    if(err) console.log('Connection to database failed.'), console.log(err);
 });
 
 
@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(headerMW);
 
 app.get('/api/user', (req, res) => {
-    con.query('SELECT * FROM user', (err, rows) => {
+    con.query('SELECT * FROM user', (err, result) => {
         res.send(JSON.stringify(result))
     });  
 });
@@ -38,7 +38,8 @@ app.get('/api/user/:id', (req, res) => {
 
 app.post('/api/user', (req, res) => {
     console.log(req.body);
-    con.query(`INSERT INTO user (username, firstname, lastname, email, adress) VALUES ('${req.body.username}', '${req.body.firstname}', '${req.body.lastname}', '${req.body.email}', '${req.body.adress}')`, (err, result) => {
+    con.query(`INSERT INTO user (username, firstname, lastname, email, adress) 
+    VALUES ('${req.body.username}', '${req.body.firstname}', '${req.body.lastname}', '${req.body.email}', '${req.body.adress}')`, (err, result) => {
         res.statusCode = 201;
         res.send(JSON.stringify(req.body))
     });
@@ -54,6 +55,15 @@ app.delete('/api/user/:id', (req, res) => {
 
 app.put('/api/user/:id', (req, res) => {
 
+    con.query(`UPDATE user SET 
+    username = '${req.body.username}', 
+    firstname = '${req.body.firstname}', 
+    lastname = '${req.body.lastname}', 
+    email = '${req.body.email}',
+    adress = '${req.body.adress}' 
+    WHERE id = ${parseInt(req.params.id)}`, (err, result) => {
+        res.status(200).send(JSON.stringify(req.body));
+    });
 });
 
 app.listen(3000, () => {
