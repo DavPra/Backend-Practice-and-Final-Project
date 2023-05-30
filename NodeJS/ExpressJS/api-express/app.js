@@ -46,6 +46,10 @@ app.post('/api/user', (req, res) => {
 
 app.delete('/api/user/:id', (req, res) => {
 
+    con.query(`DELETE FROM user WHERE id =${parseInt(req.params.id)}`, (err, result) => {
+        res.status(204).send('');
+    });
+
 });
 
 app.put('/api/user/:id', (req, res) => {
