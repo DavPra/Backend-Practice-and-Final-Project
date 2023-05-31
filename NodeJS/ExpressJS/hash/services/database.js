@@ -45,5 +45,6 @@ async function findUserByCredetials({email, password}) {
 
 module.exports = {
     getUsers,
-    createUser
+    createUser,
+    findUserByCredetials
 }
