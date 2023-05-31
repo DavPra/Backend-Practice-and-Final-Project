@@ -6,8 +6,8 @@ const router = express.Router();
 
 router.post('/login', passport.authenticate('local', {session: false}), async (req, res) => {
     try {
-        const token = jwt.signUser(user);
-        res.json({Token: token, user: user});
+        const token = jwt.signUser(req.user);
+        res.json({Token: token, user: req.user});
     } catch (e) {
         console.log(e);
         res.status(500).send('Something went wrong!');

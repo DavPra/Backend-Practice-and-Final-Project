@@ -10,3 +10,5 @@ const strategy = new LocalStrategy(options, async (email, password, done) => {
         done(e);
     }
 });
+
+module.exports = strategy;
