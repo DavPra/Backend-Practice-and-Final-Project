@@ -8,7 +8,7 @@ function signUser(user) {
         sub: user.id,
         name: user.name,
         email: user.email
-    })
+    }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN })
 }
 
 module.exports = {
