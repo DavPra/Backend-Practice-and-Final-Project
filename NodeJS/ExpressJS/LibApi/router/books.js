@@ -20,5 +20,17 @@ router.get('/books/:id', async (req, res) => {
 }
 );
 
+router.get('/books/search/:searchString', async (req, res) => {
+    const book = await db.bookSearch({searchString: req.params.searchString})
+    res.json(book)
+}
+);
+
+router.get('/books/order/:order', async (req, res) => {
+    const book = await db.bookOrder({order: req.params.order})
+    res.json(book)
+}
+);
+
 
 module.exports = router;
