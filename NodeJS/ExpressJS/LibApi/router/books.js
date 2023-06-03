@@ -4,7 +4,13 @@ const router = express.Router();
 
 router.get('/books', async (req, res) => {
     const books = await db.getBooks()
-    res.send(books)
+    res.json(books)
+}
+);
+
+router.post('/books', async (req, res) => {
+    const book = await db.createBook(req.body)
+    res.json(book)
 }
 );
 

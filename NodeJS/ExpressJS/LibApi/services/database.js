@@ -23,6 +23,12 @@ async function getBooks() {
   return result
 }
 
+async function createBook({title, author_id}) {
+    const [result] = await connection.execute('INSERT INTO books (title, author_id) VALUES (?, ?)', [title, author_id])
+    return console.log("Book created")
+}
+
+
 async function createUser({username, email, password}) {
     const hash = await bcrypt.hash(password, 10)
     await connection.execute('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [username, email, hash])
@@ -54,13 +60,22 @@ async function findUserByCredetials({email, password}) {
     return user
 }
 
+async function createAuthor({name}) {
+    const [result] = await connection.execute('INSERT INTO authors (name) VALUES (?)', [name])
+    return console.log("Author created")
+}
 
-
-
+async function getAuthors() {
+    const [result] = await connection.execute('SELECT * FROM authors')
+    return result
+}
 
 module.exports = {
     getBooks,
     createUser,
     findBookbyID,
-    findUserByCredetials
+    findUserByCredetials,
+    createAuthor,
+    getAuthors,
+    createBook
 };
