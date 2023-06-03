@@ -16,11 +16,6 @@ mysql.createConnection({
     console.log('Error connecting to database', err)
 });
 
-async function getUsers() {
-  const [result] = await connection.execute('SELECT * FROM users')
-
-  return result
-}
 
 async function getBooks() {
   const [result] = await connection.execute('SELECT * FROM books')
@@ -44,7 +39,7 @@ async function findBookbyID({id}) {
 }
 
 async function findUserByCredetials({email, password}) {
-    const [result] = await connection.execute('SELECT * FROM user WHERE email = ? LIMIT 1', [email])
+    const [result] = await connection.execute('SELECT * FROM users WHERE email = ? LIMIT 1', [email])
     if (!result.length) {
     throw new Error('User not found')
     }
@@ -61,8 +56,9 @@ async function findUserByCredetials({email, password}) {
 
 
 
+
+
 module.exports = {
-    getUsers,
     getBooks,
     createUser,
     findBookbyID,
