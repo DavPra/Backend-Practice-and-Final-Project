@@ -114,6 +114,11 @@ async function getAuthors() {
     return result
 }
 
+async function editAuthors({name, id}) {
+    const [result] = await connection.execute('UPDATE authors SET name = ? WHERE id = ?', [name, id])
+    return console.log("Author edited")
+}
+
 module.exports = {
     getBooks,
     createUser,
@@ -123,5 +128,7 @@ module.exports = {
     getAuthors,
     createBook,
     bookSearch,
-    bookOrder
+    bookOrder,
+    editBooks,
+    editAuthors
 };

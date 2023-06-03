@@ -17,4 +17,10 @@ router.post('/authors', async (req, res) => {
 }
 );
 
+router.put('/authors/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    const author = await db.editAuthors({id: req.params.id, name: req.body.name})
+    res.json(author)
+}
+);
+
 module.exports = router;
