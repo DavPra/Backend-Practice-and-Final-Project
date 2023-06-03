@@ -30,7 +30,7 @@ async function getBooks() {
 
 async function createUser({username, email, password}) {
     const hash = await bcrypt.hash(password, 10)
-    await connection.execute('INSERT INTO user (username, email, password) VALUES (?, ?, ?)', [username, email, hash])
+    await connection.execute('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [username, email, hash])
 }
 
 async function findBookbyID({id}) {
@@ -43,11 +43,28 @@ async function findBookbyID({id}) {
     return book
 }
 
+async function findUserByCredetials({email, password}) {
+    const [result] = await connection.execute('SELECT * FROM user WHERE email = ? LIMIT 1', [email])
+    if (!result.length) {
+    throw new Error('User not found')
+    }
+
+    const user = result[0]
+
+    const match = await bcrypt.compare(password, user.password)
+    if (!match) {
+    throw new Error('Wrong password')
+    }
+    delete user.password
+    return user
+}
+
 
 
 module.exports = {
     getUsers,
     getBooks,
     createUser,
-    findBookbyID
+    findBookbyID,
+    findUserByCredetials
 };
