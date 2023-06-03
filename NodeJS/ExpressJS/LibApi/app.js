@@ -7,9 +7,8 @@ const jwtStrategy = require('./strategies/jwtStrategy');
 const register = require('./router/register');
 const login = require('./router/login');
 const books = require('./router/books');
-const id = require('./router/bookbyid');
+const id = require('./router/books');
 const authors = require('./router/authors');
-const booksById = require('./router/bookbyid');
 
 
 app.use(express.json());
@@ -21,7 +20,7 @@ passport.use('jwt', jwtStrategy);
 app.use('/api', register);
 app.use('/api', login);
 app.use('/api', books);
-app.use('/api/books',id);
+app.use('/api/books', id);
 app.use('/api', authors);
 
 app.listen(3000);
