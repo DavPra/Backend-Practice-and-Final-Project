@@ -2,6 +2,8 @@ const Users = require('../models/user')
 const Books = require('../models/books')
 const Authors = require('../models/authors')
 const bcrypt = require('bcryptjs')
+const { Op } = require('sequelize')
+
 
 async function createUser({password, username, email}) {
     const hash = await bcrypt.hash(password, 10)
@@ -52,13 +54,16 @@ async function getBooks() {
 
 async function getBookById(id) {
     //const [result] = await connection.execute('SELECT b.title as Book_Title, a.name as Author_Name from books b inner join authors a on (a.id = b.author_id) where b.id = ?', [id])
-
+return await Books.findOne({where: {id: id}})
     //return result[0]
 }
 
 async function searchBook(searchString) {
     //const [result] = await connection.execute('SELECT b.title as Book_Title, a.name as Author_Name from books b inner join authors a on (a.id = b.author_id) WHERE b.title LIKE ?', [`%${searchString}%`])
-
+    const Books = await Books.findAll({where: {
+        title: {[Op.like]: searchString
+    }}
+})
     //return result
 }
 
@@ -91,7 +96,7 @@ async function editBooks(id, {title, author_id}) {
 
 async function editAuthor(id, {name}) {
     // const [result] = await connection.execute('UPDATE authors SET name = ? WHERE id = ?', [name, id])
-
+    return await Authors.update({name: name}, {where: {id: id}})
     //return result
 }
 

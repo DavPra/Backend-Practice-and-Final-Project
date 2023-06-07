@@ -6,7 +6,7 @@ const gBooks = require('./router/gBooks')
 //const authors = require('./router/authors')
 const pBooks = require('./router/pBooks')
 const passport = require('passport')
-const localStrategy = require('./strategies/localStrategy')
+const localStrategy = require('./strategies/localstrategy')
 const jwtStrategy = require('./strategies/jwtStrategy')
 
 
