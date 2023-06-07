@@ -1,15 +1,17 @@
-const JwtStrategy = require('passport-jwt').Strategy;
-const JwtExtractor = require('passport-jwt').ExtractJwt;
-const jwt = require('../services/jwt');
+const jwtStrategy = require('passport-jwt').Strategy
+const jwtExtractor = require('passport-jwt').ExtractJwt
+const jwt = require('../services/jwt')
 
 const options = {
-    jwtFromRequest: JwtExtractor.fromAuthHeaderAsBearerToken(),
+    jwtFromRequest: jwtExtractor.fromAuthHeaderAsBearerToken(),
     secretOrKey: jwt.JWT_SECRET
-};
+}
 
-const strategy = new JwtStrategy(options, (jwt, done) => {
-    const user = {name: jwt.name, email: jwt.email};
-    done(null, user);
-});
+const strategy = new jwtStrategy(options, (jwt, done) => {
 
-module.exports = strategy;
+    const user = {username: jwt.username, id: jwt.id, email: jwt.email}
+    done(null, user)
+})
+
+
+module.exports = strategy
