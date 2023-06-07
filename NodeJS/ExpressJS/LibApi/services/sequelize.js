@@ -6,6 +6,6 @@ const sequelize = new Sequelize ('library', 'root', '', {
     port: 3306
 })
 
-seqeulize.sync({alter: true})
+sequelize.sync({alter: true})
 
 module.exports = sequelize;

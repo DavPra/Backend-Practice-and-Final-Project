@@ -6,20 +6,20 @@ const Authors = require('../models/authors')
 const Books = require('../models/books')
 
 
-/*
+
 router.get('/orderby/:order', async (req, res) => {
     const order = await database.orderBooks(req.params.order)
    res.json(order)
   
 })
-*/
+
 
 router.get('/', async (req, res) => {
     const books = await database.getBooks()
     res.json(books)
 })
 
-/*
+
 router.get('/:id', async (req, res) => {
     const oneBook = await database.getBookById(req.params.id)
     res.json(oneBook)
@@ -33,7 +33,7 @@ router.get('/search/:searchString', async (req, res) => {
 
 
 
-*/
+
 
 
 module.exports = router

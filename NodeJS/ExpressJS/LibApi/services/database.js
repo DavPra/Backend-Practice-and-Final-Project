@@ -2,8 +2,7 @@ const Users = require('../models/user')
 const Books = require('../models/books')
 const Authors = require('../models/authors')
 const bcrypt = require('bcryptjs')
-const { Op } = require('sequelize')
-
+const {Op} = require('sequelize')
 
 async function createUser({password, username, email}) {
     const hash = await bcrypt.hash(password, 10)
@@ -35,7 +34,8 @@ async function findUserByCredentials({email, password}) {
 
 
 async function addAuthor({name}) {
- //await connection.execute('INSERT INTO authors(name) VALUES (?)', [name])
+    //await connection.execute('INSERT INTO authors(name) VALUES (?)', [name])
+    return Authors.create({name: name})
 }
 
 
@@ -50,40 +50,45 @@ async function getBooks() {
     //const [result] = await connection.execute('SELECT b.title as Book_Title, a.name as Author_Name from books b inner join authors a on (a.id = b.author_id)')
     const result = await Books.findAll({include: Authors})
     return result
-    }
+}
 
 async function getBookById(id) {
     //const [result] = await connection.execute('SELECT b.title as Book_Title, a.name as Author_Name from books b inner join authors a on (a.id = b.author_id) where b.id = ?', [id])
-return await Books.findOne({where: {id: id}})
+    return await Books.findOne({where: {id:id}})
     //return result[0]
 }
 
 async function searchBook(searchString) {
     //const [result] = await connection.execute('SELECT b.title as Book_Title, a.name as Author_Name from books b inner join authors a on (a.id = b.author_id) WHERE b.title LIKE ?', [`%${searchString}%`])
-    const Books = await Books.findAll({where: {
-        title: {[Op.like]: searchString
-    }}
-})
-    //return result
+
+    return await Books.findAll({
+        where: {
+            title: {
+                [Op.like]: `%${searchString}%`}
+        }
+    })
 }
 
 async function orderBooks(order) {
-    /*
+
     if (order === "title") {
-        const [result] = await connection.execute(
-            'SELECT b.title as Book_Title, b.id as Book_Id, a.name as Author_Name from books b inner join authors a on (a.id = b.author_id) ORDER BY b.title  desc', [order])
+        //const [result] = await connection.execute(
+        //    'SELECT b.title as Book_Title, b.id as Book_Id, a.name as Author_Name from books b inner join authors a on (a.id = b.author_id) ORDER BY b.title  desc', [order])
 
-        return result
+        //return result
+        return await Books.findAll({include: Authors, order: [['title', 'DESC']]})
 
     }
-    else {   
-        const [result] = await connection.execute(
-        'SELECT b.title as Book_Title, b.id as Book_Id, a.name as Author_Name from books b inner join authors a on (a.id = b.author_id) ORDER BY a.name desc', [order])
+    else {
+       // const [result] = await connection.execute(
+        // 'SELECT b.title as Book_Title, b.id as Book_Id, a.name as Author_Name from books b inner join authors a on (a.id = b.author_id) ORDER BY a.name desc', [order])
 
-        return result
+        //return result
+
+        return await Books.findAll({include: Authors, order: [[Authors, 'name', 'DESC']]})
     }
-    
-*/
+
+
 }
 
 async function editBooks(id, {title, author_id}) {
@@ -96,21 +101,21 @@ async function editBooks(id, {title, author_id}) {
 
 async function editAuthor(id, {name}) {
     // const [result] = await connection.execute('UPDATE authors SET name = ? WHERE id = ?', [name, id])
+
     return await Authors.update({name: name}, {where: {id: id}})
     //return result
 }
 
 
 module.exports = {
-getBooks,
-createUser,
-findUserByCredentials,
-addAuthor,
-addBooks,
-getBookById,
-searchBook,
-orderBooks,
-editBooks,
-editAuthor
+    getBooks,
+    createUser,
+    findUserByCredentials,
+    addAuthor,
+    addBooks,
+    getBookById,
+    searchBook,
+    orderBooks,
+    editBooks,
+    editAuthor
 }
-
