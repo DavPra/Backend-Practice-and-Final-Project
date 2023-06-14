@@ -9,4 +9,10 @@ router.get('/products', async (req, res) => {
 }
 );
 
+router.post('/products', async (req, res) => {
+    const product = await db.addProducts(req.body);
+    res.json(product);
+}
+);
+
 module.exports = router;

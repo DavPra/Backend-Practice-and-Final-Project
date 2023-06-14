@@ -14,8 +14,8 @@ async function createGuser({Name, email, telNum, strasse, ort, plz}) {
     return {id: user.id, Name: user.Name, Email: user.Email, Telefonnummer: user.Telefonnummer, Strasse: user.Strasse, Ort: user.Ort, Postleitzahl: user.Postleitzahl, Admin: user.Admin}
 }   // Speicher der Daten eines neuen Gastusers
 
-async function addProducts({titel, typ, länge, preis, regisseur, lagerstand}) {
-    return products.create({Titel: titel, Typ: typ, Länge: länge, Preis: preis, Regisseur: regisseur, Lagerstand: lagerstand})
+async function addProducts({titel, genre, typ, länge, preis, regisseur, lagerstand}) {
+    return products.create({Titel: titel, Genre: genre, Typ: typ, Länge: länge, Preis: preis, Regisseur: regisseur, Lagerstand: lagerstand})
 }  // Hinzufügen eines neuen Produkts
 
 async function getProducts() {

@@ -7,23 +7,22 @@ const Products = sequelize.define('products', {
         allowNull: false,
         validate: {
             notEmpty: true,
-            isLowercase: true
+         
     }
     },
     Genre: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,
         validate: {
-            notEmpty: true,
-            isLowercase: true
-    }
+            notEmpty: true
+
+        }
     },
     Typ: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,
         validate: {
             notEmpty: true,
-            isLowercase: true
     }
     },
     Länge: {
@@ -31,7 +30,7 @@ const Products = sequelize.define('products', {
         allowNull: false,
         validate: {
             notEmpty: true,
-            isLowercase: true
+           
     }
     },
     Preis: {
@@ -39,15 +38,15 @@ const Products = sequelize.define('products', {
         allowNull: false,
         validate: {
             notEmpty: true,
-            isLowercase: true
+            
     }
-    },
+},
     Regisseur: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,
         validate: {
             notEmpty: true,
-            isLowercase: true
+           
     }
     },
     Lagerstand: {
@@ -55,12 +54,13 @@ const Products = sequelize.define('products', {
         allowNull: false,
         validate: {
             notEmpty: true,
-            isLowercase: true
+            
     }
     }
 }, {
     freezeTableName: true,
-
+    timestamps: false
 })
+
 
 module.exports = Products
