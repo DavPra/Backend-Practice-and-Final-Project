@@ -14,7 +14,7 @@ module.exports = {
             Genre: 'Crime',
             Typ: 'DVD',
             Länge: 202,
-            Preis: 12,99,
+            Preis: 12.99,
             Regisseur: 'Francis Ford Coppola',
             Lagerstand: 120
         },
@@ -23,7 +23,7 @@ module.exports = {
             Genre: 'Crime',
             Typ: 'DVD',
             Länge: 170,
-            Preis: 9,99,
+            Preis: 9.99,
             Regisseur: 'Francis Ford Coppola',
             Lagerstand: 100
         },
@@ -32,7 +32,7 @@ module.exports = {
             Genre: 'Animation',
             Typ: 'DVD',
             Länge: 90,
-            Preis: 7,99,
+            Preis: 7.99,
             Regisseur: 'Andrew Adamson',
             Lagerstand: 200
         },
@@ -41,7 +41,7 @@ module.exports = {
             Genre: 'Animation',
             Typ: 'Blu-Ray',
             Länge: 93,
-            Preis: 14,99,
+            Preis: 14.99,
             Regisseur: 'Andrew Adamson',
             Lagerstand: 150
         },
@@ -50,7 +50,7 @@ module.exports = {
             Genre: 'Sci-Fi',
             Typ: 'Blu-Ray',
             Länge: 133,
-            Preis: 19,99,
+            Preis: 19.99,
             Regisseur: 'Gareth Edwards',
             Lagerstand: 100
         }
