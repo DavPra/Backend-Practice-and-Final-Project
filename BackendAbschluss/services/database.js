@@ -21,6 +21,18 @@ async function getUsers() {
     return result
 }   // Ausgabe aller User
 
+async function findUserByCredetials({email, password}) {
+    const user = await Users.findOne({where: {Email: email}})
+    if (!user) {
+        throw new Error('User not found')
+    }
+    const isMatch = await bcrypt.compare(password, user.password)
+    if (!isMatch) {
+        throw new Error('Password not correct')
+    }
+    return user
+}   // Ausgabe eines Users anhand der Email und des Passworts
+
 async function addProducts({titel, genre, typ, länge, preis, regisseur, lagerstand}) {
     return products.create({Titel: titel, Genre: genre, Typ: typ, Länge: länge, Preis: preis, Regisseur: regisseur, Lagerstand: lagerstand})
 }  // Hinzufügen eines neuen Produkts
@@ -73,5 +85,6 @@ module.exports = {
     addGuestUser,
     getProductsById,
     deleteProducts,
-    updateProducts
+    updateProducts,
+    findUserByCredetials
 }

@@ -15,6 +15,8 @@ router.get('/products/:id', async (req, res) => {
 }
 );
 
+router.use(passport.authenticate('jwt', { session: false }));
+
 router.post('/products', async (req, res) => {
     const product = await db.addProducts(req.body);
     res.json(product);
