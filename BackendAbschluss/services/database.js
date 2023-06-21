@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 const products = require('../models/products')
 const Users = require('../models/users')
+const guestUsers = require('../models/guestUsers')
 
 async function createUser({Name, email, password, telNum, strasse, ort, plz}) {
     const hash = await bcrypt.hash(password, 10)
@@ -29,10 +30,21 @@ async function getProducts() {
     return result
 }   // Ausgabe aller Produkte
 
+async function getguestUsers() {
+    const result = await guestUsers.findAll()
+    return result
+}   // Ausgabe aller Gastuser
+
+async function addGuestUser({Name, Strasse, Ort, PlZ, Email, TelNmr}) {
+    return guestUsers.create({Name: Name, Strasse: Strasse, Ort: Ort, PlZ: PlZ, Email: Email, TelNmr: TelNmr})
+}   // Hinzufügen eines neuen Gastusers
+
 module.exports = {
     createUser,
     addProducts,
     createGuser,
     getProducts,
-    getUsers
+    getUsers,
+    getguestUsers,
+    addGuestUser
 }

@@ -48,3 +48,5 @@ const guestUsers = sequelize.define('guestUsers', {
     timestamps: false,
     freezeTableName: true
 })
+
+module.exports = guestUsers
