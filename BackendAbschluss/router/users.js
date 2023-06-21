@@ -24,7 +24,7 @@ router.get('/guests', async (req, res) => {
     }
 })
 
-router.post('/guets', async (req, res) => {
+router.post('/guests', async (req, res) => {
     try {
         const result = await database.addGuestUser(req.body)
         res.json(result)

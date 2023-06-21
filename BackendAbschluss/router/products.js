@@ -9,10 +9,29 @@ router.get('/products', async (req, res) => {
 }
 );
 
+router.get('/products/:id', async (req, res) => {
+    const product = await db.getProductsById(req.params.id);
+    res.json(product);
+}
+);
+
 router.post('/products', async (req, res) => {
     const product = await db.addProducts(req.body);
     res.json(product);
 }
 );
+
+router.delete('/products/:id', async (req, res) => {
+    const product = await db.deleteProducts(req.params.id);
+    res.json(product);
+}
+);
+
+router.patch('/products/:id', async (req, res) => {
+    const product = await db.updateProducts(req.params.id, req.body);
+    res.json(product);
+}
+);
+
 
 module.exports = router;

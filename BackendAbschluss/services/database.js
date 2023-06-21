@@ -6,8 +6,8 @@ const guestUsers = require('../models/guestUsers')
 async function createUser({Name, email, password, telNum, strasse, ort, plz}) {
     const hash = await bcrypt.hash(password, 10)
 
-    const user =  await Users.create({Name: Name, Email:email, Password: hash, Telefonnummer: telNum, Strasse: strasse, Ort: ort, Postleitzahl: plz}) 
-    return {id: user.id, Name: user.Name, Email: user.Email, Telefonnummer: user.Telefonnummer, Strasse: user.Strasse, Ort: user.Ort, Postleitzahl: user.Postleitzahl}
+    const user =  await Users.create({Name: Name, Email:email, Password: hash, Telefonnummer: telNum, Strasse: strasse, Ort: ort, Postleitzahl: plz, Admin: 1}) 
+    return {id: user.id, Name: user.Name, Email: user.Email, Telefonnummer: user.Telefonnummer, Strasse: user.Strasse, Ort: user.Ort, Postleitzahl: user.Postleitzahl, Admin: user.Admin}
 }   // Registrierung eines neuen Users, Passwort wird gehashed
 
 async function createGuser({Name, email, telNum, strasse, ort, plz}) {
@@ -30,6 +30,30 @@ async function getProducts() {
     return result
 }   // Ausgabe aller Produkte
 
+async function getProductsById(id) {
+    const result = await products.findByPk(id)
+    return result
+}   // Ausgabe eines Produkts anhand der ID
+
+async function deleteProducts(id) {
+    const result = await products.destroy({
+        where: {
+            id: id
+        }
+    })
+    return result
+}   // Löschen eines Produkts anhand der ID
+
+async function updateProducts(id, {titel, genre, typ, länge, preis, regisseur, lagerstand}) {
+    const result = await products.update({Titel: titel, Genre: genre, Typ: typ, Länge: länge, Preis: preis, Regisseur: regisseur, Lagerstand: lagerstand}, {
+        where: {
+            id: id
+        }
+    })
+    return result
+}   // Updaten eines Produkts anhand der ID
+
+
 async function getguestUsers() {
     const result = await guestUsers.findAll()
     return result
@@ -46,5 +70,8 @@ module.exports = {
     getProducts,
     getUsers,
     getguestUsers,
-    addGuestUser
+    addGuestUser,
+    getProductsById,
+    deleteProducts,
+    updateProducts
 }
