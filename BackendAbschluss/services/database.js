@@ -21,6 +21,15 @@ async function getUsers() {
     return result
 }   // Ausgabe aller User
 
+async function deleteUser(id) {
+    const result = await Users.destroy({
+        where: {
+            id: id
+        }
+    })
+    return result
+}   // Löschen eines Users anhand der ID
+
 async function findUserByCredetials({email, password}) {
     const user = await Users.findOne({where: {Email: email}})
     if (!user) {
@@ -86,5 +95,6 @@ module.exports = {
     getProductsById,
     deleteProducts,
     updateProducts,
-    findUserByCredetials
+    findUserByCredetials,
+    deleteUser
 }
