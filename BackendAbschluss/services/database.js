@@ -80,6 +80,11 @@ async function getguestUsers() {
     return result
 }   // Ausgabe aller Gastuser
 
+async function getOrdersbyUser(id) {
+    const result = await orders.findAll({where: {UserId: id}})
+    return result
+}   // Ausgabe aller Bestellungen eines Users anhand der ID
+
 module.exports = {
     createUser,
     addProducts,
@@ -91,5 +96,6 @@ module.exports = {
     deleteProducts,
     updateProducts,
     findUserByCredetials,
-    deleteUser
+    deleteUser,
+    getOrdersbyUser
 }

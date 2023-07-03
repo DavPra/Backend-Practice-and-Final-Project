@@ -4,7 +4,11 @@ const database = require('../services/database')
 const passport = require('passport')
 const jwtStrategy = require('../strategies/jwtStrategy')
 
+//const res = Boolean
+
 passport.use('jwt', jwtStrategy)
+
+//if res(req.user.admin === false) {console.log('Only admins can access this route')};
 
 
 router.get('/users', async (req, res) => {
