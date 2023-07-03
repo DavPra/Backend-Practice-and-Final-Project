@@ -1,6 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const database = require('../services/database')
+const passport = require('passport')
+const jwtStrategy = require('../strategies/jwtStrategy')
+
+passport.use('jwt', jwtStrategy)
+
 
 router.get('/users', async (req, res) => {
     try {

@@ -80,10 +80,6 @@ async function getguestUsers() {
     return result
 }   // Ausgabe aller Gastuser
 
-async function addGuestUser({Name, Strasse, Ort, PlZ, Email, TelNmr}) {
-    return guestUsers.create({Name: Name, Strasse: Strasse, Ort: Ort, PlZ: PlZ, Email: Email, TelNmr: TelNmr})
-}   // Hinzufügen eines neuen Gastusers
-
 module.exports = {
     createUser,
     addProducts,
@@ -91,7 +87,6 @@ module.exports = {
     getProducts,
     getUsers,
     getguestUsers,
-    addGuestUser,
     getProductsById,
     deleteProducts,
     updateProducts,
