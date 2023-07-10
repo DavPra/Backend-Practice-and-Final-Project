@@ -84,6 +84,11 @@ async function getguestUsers() {
     return result
 }   // Ausgabe aller Gastuser
 
+async function getOrders() {
+    const result = await orders.findAll()
+    return result
+}   // Ausgabe aller Bestellungen
+
 async function getOrdersbyUser(id) {
     const result = await orders.findAll({where: {UserId: id}})
     return result
@@ -102,5 +107,6 @@ module.exports = {
     findUserByCredetials,
     deleteUser,
     getOrdersbyUser,
+    getOrders,
     orderProduct
 }

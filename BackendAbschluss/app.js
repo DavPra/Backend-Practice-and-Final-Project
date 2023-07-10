@@ -5,7 +5,7 @@ const register = require('./router/register');
 const login = require('./router/login');
 const products = require('./router/products');
 const users = require('./router/users');
-const orders = require('./router/orders');
+const adminRoutes = require('./router/adminRoutes');
 const jwtTest = require('./router/jwtTest');
 
 const passport = require('passport')
@@ -23,7 +23,7 @@ app.use(register);
 app.use(login);
 app.use(products);
 app.use(users);
-app.use(orders);
+app.use(adminRoutes);
 app.use(jwtTest);
 
 
