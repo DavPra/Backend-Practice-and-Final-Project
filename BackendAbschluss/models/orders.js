@@ -1,7 +1,7 @@
 const sequelize = require('../services/sequelize')
 const Sequelize = require('sequelize')
 
-const Orders = sequelize.define('orders', {
+const orders = sequelize.define('orders', {
     OrderDate: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,
@@ -29,4 +29,4 @@ const Orders = sequelize.define('orders', {
     freezeTableName: true
 })
 
-module.exports = Orders
+module.exports = orders
