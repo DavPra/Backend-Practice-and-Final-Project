@@ -8,7 +8,8 @@ function signUser(user) {
         sub: user.id,
         name: user.name,
         email: user.email,
-        admin: user.admin
+        admin: user.admin,
+        id: user.id
     }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN })
 }
 

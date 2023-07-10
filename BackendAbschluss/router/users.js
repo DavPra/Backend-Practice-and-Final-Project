@@ -3,46 +3,38 @@ const router = express.Router()
 const database = require('../services/database')
 const passport = require('passport')
 const jwtStrategy = require('../strategies/jwtStrategy')
+const jwt = require('../services/jwt')
 
-//const res = Boolean
+router.get('/userOrders', passport.authenticate('jwt', { session: false }),
+    async (req, res) => {
+        try {
+            console.log(req.user.id)
+            const id = req.user.id;
+            const orders = await database.getOrdersbyUser(id);
+            res.json(orders);
 
-passport.use('jwt', jwtStrategy)
-
-//if res(req.user.admin === false) {console.log('Only admins can access this route')};
-
-
-router.get('/users', async (req, res) => {
-    try {
-        const result = await database.getUsers()
-        res.json(result)
+        } catch (e) {
+            console.log(e);
+            res.status(500).send('Something went wrong');
+        }
     }
-    catch (e) {
-        console.log(e)
-        res.status(500).send('Something went wrong')
-    }
-})
+);
 
-router.get('/guests', async (req, res) => {
-    try {
-        const result = await database.getguestUsers()
-        res.json(result)
-    }
-    catch (e) {
-        console.log(e)
-        res.status(500).send('Something went wrong')
-    }
-})
+router.post('/userOrders', passport.authenticate('jwt', { session: false }),
+    async (req, res) => {
+        try {
+            const id = req.user.id;
+            const orders = await database.orderProduct(id);
+            res.json(orders);
 
-router.post('/guests', async (req, res) => {
-    try {
-        const result = await database.addGuestUser(req.body)
-        res.json(result)
+
+        } catch (e) {
+            console.log(e);
+            res.status(500).send('Something went wrong');
+        }
     }
-    catch (e) {
-        console.log(e)
-        res.status(500).send('Something went wrong')
-    }
-})
+);
+
 
 
 module.exports = router

@@ -75,10 +75,16 @@ async function updateProducts(id, {titel, genre, typ, länge, preis, regisseur, 
     return result
 }   // Updaten eines Produkts anhand der ID
 
-async function orderProduct() {
-    const result = await orders.create({OrderDate: orderDate, OrderStatus: orderStatus, OrderTotal: orderTotal, OrderUserID: orderUserID, OrderProductID: orderProductID})
+async function orderProduct(id) {
+    const result = await orders.create({OrderDate: Date.now(), OrderStatus: "Offen", UserId: id})
     return result
-}
+}   // Bestellung aufgeben
+//seuqlize created at und updated at customisieren
+
+async function getOrdersbyUser(id) {
+    const result = await orders.findAll({where: {UserId: id}})
+    return result
+}   // Ausgabe aller Bestellungen eines Users anhand der ID
 
 async function getguestUsers() {
     const result = await guestUsers.findAll()
@@ -93,7 +99,7 @@ async function getOrders() {
 async function getOrdersbyUser(id) {
     const result = await orders.findAll({where: {UserId: id}})
     return result
-}   // Ausgabe aller Bestellungen eines Users anhand der ID
+}   // Ausgabe aller Bestellungen eines Users anhand der UserID
 
 module.exports = {
     createUser,
