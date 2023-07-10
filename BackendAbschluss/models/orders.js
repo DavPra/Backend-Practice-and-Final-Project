@@ -2,15 +2,8 @@ const sequelize = require('../services/sequelize')
 const Sequelize = require('sequelize')
 
 const Orders = sequelize.define('orders', {
-    OrderID: {
-        type: Sequelize.DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-            notEmpty: true,
-        }
-    },
     OrderDate: {
-        type: Sequelize.DataTypes.DATE,
+        type: Sequelize.DataTypes.STRING,
         allowNull: false,
         validate: {
             notEmpty: true
@@ -30,7 +23,7 @@ const Orders = sequelize.define('orders', {
             notEmpty: true
         }
     }
-    
+
 }, {
     timestamps: false,
     freezeTableName: true

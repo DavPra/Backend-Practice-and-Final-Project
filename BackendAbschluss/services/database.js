@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 const products = require('../models/products')
 const Users = require('../models/users')
+const orders = require('../models/orders')
 const guestUsers = require('../models/guestUsers')
 
 async function createUser({Name, email, password, telNum, strasse, ort, plz}) {
