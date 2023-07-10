@@ -14,6 +14,5 @@ function signUser(user) {
 
 module.exports = {
     signUser,
-    signAdmin,
     JWT_SECRET
 }
