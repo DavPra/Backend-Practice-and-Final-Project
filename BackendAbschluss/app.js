@@ -4,7 +4,7 @@ const app = express();
 const register = require('./router/register');
 const login = require('./router/login');
 const products = require('./router/products');
-const users = require('./router/users');
+const users = require('./router/userRoutes');
 const adminRoutes = require('./router/adminRoutes');
 const jwtTest = require('./router/jwtTest');
 
