@@ -74,6 +74,10 @@ async function updateProducts(id, {titel, genre, typ, länge, preis, regisseur, 
     return result
 }   // Updaten eines Produkts anhand der ID
 
+async function orderProduct() {
+    const result = await orders.create({OrderDate: orderDate, OrderStatus: orderStatus, OrderTotal: orderTotal, OrderUserID: orderUserID, OrderProductID: orderProductID})
+    return result
+}
 
 async function getguestUsers() {
     const result = await guestUsers.findAll()
@@ -97,5 +101,6 @@ module.exports = {
     updateProducts,
     findUserByCredetials,
     deleteUser,
-    getOrdersbyUser
+    getOrdersbyUser,
+    orderProduct
 }
