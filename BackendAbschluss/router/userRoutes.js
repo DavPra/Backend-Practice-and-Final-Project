@@ -23,6 +23,7 @@ router.get('/userOrders', passport.authenticate('jwt', { session: false }),
 router.post('/userOrders', passport.authenticate('jwt', { session: false }),
     async (req, res) => {
         try {
+            //const Lagerstand = await database.getLagerstand(req.body.product_id);
             const id = req.user.id;
             const orders = await database.orderProduct(id);
             res.json(orders);

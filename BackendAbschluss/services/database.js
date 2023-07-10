@@ -52,6 +52,11 @@ async function getProducts() {
     return result
 }   // Ausgabe aller Produkte
 
+async function getProductLagerstand(id) {
+    const result = await products.findByPk(id)
+    return result.Lagerstand
+}   // Ausgabe des Lagerstands eines Produkts anhand der ID
+
 async function getProductsById(id) {
     const result = await products.findByPk(id)
     return result
@@ -115,5 +120,6 @@ module.exports = {
     deleteUser,
     getOrdersbyUser,
     getOrders,
-    orderProduct
+    orderProduct,
+    getProductLagerstand
 }
