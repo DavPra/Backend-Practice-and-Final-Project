@@ -1,14 +1,19 @@
 const express = require('express');
-const jwt = require('../services/jwt');
-const passport = require('passport');
 const router = express.Router();
+const db = require('../services/database');
+const passport = require('passport');
+const jwtStrategy = require('../strategies/jwtStrategy');
+const jwt = require('../services/jwt');
 
-router.post('/jwtTest', passport.authenticate('jwt', { session: false }),
+router.get('/orders', passport.authenticate('jwt', { session: false }),
     async (req, res) => {
         try {
             const adminStatus = req.user.admin;
             if (adminStatus === true) {
-                res.json({ message: 'You are an admin' });
+                async (req, res) => {
+                    const products = await db.getProducts();
+                    res.json(products);
+                }
             } else {
                 res.json({ message: 'You are not an admin' });
             }
@@ -19,7 +24,3 @@ router.post('/jwtTest', passport.authenticate('jwt', { session: false }),
     }
 );
 
-
-
-
-module.exports = router;

@@ -13,37 +13,24 @@ const Orders = sequelize.define('orders', {
         type: Sequelize.DataTypes.DATE,
         allowNull: false,
         validate: {
-            notEmpty: true,
+            notEmpty: true
         }
     },
     OrderStatus: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,
         validate: {
-            notEmpty: true,
+            notEmpty: true
         }
     },
-    OrderTotal: {
+    UserId: {
         type: Sequelize.DataTypes.INTEGER,
         allowNull: false,
         validate: {
-            notEmpty: true,
+            notEmpty: true
         }
-    },
-    OrderUserID: {
-        type: Sequelize.DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-            notEmpty: true,
-        }
-    },
-    OrderProductID: {
-        type: Sequelize.DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-            notEmpty: true,
-        }
-    },
+    }
+    
 }, {
     timestamps: false,
     freezeTableName: true
