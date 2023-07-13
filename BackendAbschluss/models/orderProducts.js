@@ -7,6 +7,10 @@ const orderProducts = sequelize.define('orderProducts', {
         allowNull: false,
         validate: {
             notEmpty: true
+        },
+        references: {
+            model: orders,
+            key: 'id'
         }
     },
     ProductId: {
@@ -14,6 +18,10 @@ const orderProducts = sequelize.define('orderProducts', {
         allowNull: false,
         validate: {
             notEmpty: true
+        },
+        references: {
+            model: products,
+            key: 'id'
         }
     },
     Quantity: {
