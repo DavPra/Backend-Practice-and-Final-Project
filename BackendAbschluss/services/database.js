@@ -3,6 +3,7 @@ const products = require('../models/products')
 const Users = require('../models/users')
 const orders = require('../models/orders')
 const guestUsers = require('../models/guestUsers')
+const orderProducts = require('../models/orderProducts')
 const { Sequelize } = require('sequelize')
 const sequelize = require('./sequelize')
 
@@ -88,6 +89,12 @@ async function orderProduct(id) {
 }   // Bestellung aufgeben
 //seuqlize created at und updated at customisieren
 
+async function orderProducts(id) {
+    const result = await orderProducts.create({OrderId: id})
+    return result
+}   // Bestellung aufgeben
+
+
 async function getOrdersbyUser(id) {
     const result = await orders.findAll({where: {UserId: id}})
     return result
@@ -123,5 +130,6 @@ module.exports = {
     getOrdersbyUser,
     getOrders,
     orderProduct,
-    getProductLagerstand
+    getProductLagerstand,
+    orderProducts
 }

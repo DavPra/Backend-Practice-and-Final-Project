@@ -1,14 +1,8 @@
 const sequelize = require('../services/sequelize')
 const Sequelize = require('sequelize')
+const Users = require('./users')
 
 const orders = sequelize.define('orders', {
-    OrderDate: {
-        type: Sequelize.DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
-    },
     OrderStatus: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,
@@ -21,12 +15,17 @@ const orders = sequelize.define('orders', {
         allowNull: false,
         validate: {
             notEmpty: true
-        }
+        },
+        references: {
+            model: Users,
+            key: 'id'
     }
 
+}
 }, {
     timestamps: false,
-    freezeTableName: true
+    freezeTableName: true,
+    createdAt: true
 })
 
 module.exports = orders

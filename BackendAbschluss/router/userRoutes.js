@@ -23,7 +23,6 @@ router.get('/userOrders', passport.authenticate('jwt', { session: false }),
 router.post('/userOrders', passport.authenticate('jwt', { session: false }),
     async (req, res) => {
         try {
-            //const Lagerstand = await database.getLagerstand(req.body.product_id);
             const id = req.user.id;
             const orders = await database.orderProduct(id);
             res.json(orders);
@@ -34,6 +33,35 @@ router.post('/userOrders', passport.authenticate('jwt', { session: false }),
             res.status(500).send('Something went wrong');
         }
     }
+);
+
+router.post('/order', passport.authenticate('jwt', { session: false }),
+    async (req, res) => {
+        try {
+            const id = req.user.id;
+            const orders = await database.orderProduct(id);
+            const orderProducts = await database.orderProducts(id);
+            res.json(orders + orderProducts);
+
+
+        } catch (e) {
+            console.log(e);
+            res.status(500).send('Something went wrong');
+        }
+    }
+);
+
+router.post('/guestOrder', async (req, res) => {
+    try {
+        const orders = await database.orderGuestProduct(req.body);
+        res.json(orders);
+
+
+    } catch (e) {
+        console.log(e);
+        res.status(500).send('Something went wrong');
+    }
+}
 );
 
 
