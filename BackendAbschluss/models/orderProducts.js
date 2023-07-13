@@ -1,5 +1,7 @@
 const sequelize = require('../services/sequelize')
 const Sequelize = require('sequelize')
+const orders = require('./orders')
+const products = require('./products')
 
 const orderProducts = sequelize.define('orderProducts', {
     OrderId: {

@@ -89,7 +89,7 @@ async function orderProduct(id) {
 }   // Bestellung aufgeben
 //seuqlize created at und updated at customisieren
 
-async function orderProducts(id) {
+async function orderProductsDetails(id) {
     const result = await orderProducts.create({OrderId: id})
     return result
 }   // Bestellung aufgeben
