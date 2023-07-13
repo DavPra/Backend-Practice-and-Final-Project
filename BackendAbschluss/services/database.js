@@ -84,20 +84,9 @@ async function updateProducts(id, {titel, genre, typ, länge, preis, regisseur, 
 
 async function orderProduct(id) {
     const result = await orders.create({OrderDate: Date.now(), OrderStatus: "Offen", UserId: id})
-    const orderName = console.log ({UserID: id} + "ORDER" + {OrderID: OrderId})
-    const orderDetail = await sequelize.query("CREATE TABLE IF NOT EXISTS" + {UserID: id} + "ORDER" + {OrderID: OrderId})
-    return result + orderDetail + orderName
+    return result 
 }   // Bestellung aufgeben
 //seuqlize created at und updated at customisieren
-
-async function orderProductDetails(id, {productId, anzahl}) {
-    const result = await .update({ProductId: productId, Anzahl: anzahl}, {
-        where: {
-            id: id
-        }
-    })
-    return result
-}   // Bestellung aufgeben mit Produktdetails
 
 async function getOrdersbyUser(id) {
     const result = await orders.findAll({where: {UserId: id}})
@@ -134,6 +123,5 @@ module.exports = {
     getOrdersbyUser,
     getOrders,
     orderProduct,
-    getProductLagerstand,
-    orderProductDetails
+    getProductLagerstand
 }
