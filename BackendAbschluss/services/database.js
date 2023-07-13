@@ -84,16 +84,14 @@ async function updateProducts(id, {titel, genre, typ, länge, preis, regisseur, 
 }   // Updaten eines Produkts anhand der ID
 
 async function orderProduct(id) {
-    const result = await orders.create({OrderDate: Date.now(), OrderStatus: "Offen", UserId: id})
-    return result 
+    const order = await orders.create({OrderDate: Date.now(), OrderStatus: "Offen", UserId: id})
+    return order
 }   // Bestellung aufgeben
-//seuqlize created at und updated at customisieren
 
 async function orderProductsDetails(id) {
     const result = await orderProducts.create({OrderId: id})
     return result
 }   // Bestellung aufgeben
-
 
 async function getOrdersbyUser(id) {
     const result = await orders.findAll({where: {UserId: id}})
@@ -115,6 +113,11 @@ async function getOrdersbyUser(id) {
     return result
 }   // Ausgabe aller Bestellungen eines Users anhand der UserID
 
+async function getOrderDetailsbyId(id) {
+    const result = await orderProducts.findAll({where: {id: id}})
+    return result
+}   // Ausgabe aller Bestellungen anhand der OrderID
+
 module.exports = {
     createUser,
     addProducts,
@@ -131,5 +134,6 @@ module.exports = {
     getOrders,
     orderProduct,
     getProductLagerstand,
-    orderProducts
+    orderProductsDetails,
+    getOrderDetailsbyId
 }

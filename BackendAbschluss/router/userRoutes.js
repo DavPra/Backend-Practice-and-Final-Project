@@ -53,8 +53,9 @@ router.post('/order', passport.authenticate('jwt', { session: false }),
 
 router.post('/guestOrder', async (req, res) => {
     try {
-        const orders = await database.orderGuestProduct(req.body);
-        res.json(orders);
+        const guestOrder = await database.createGuser(req.body);
+        const orders = await database.orderProduct(req.body);
+        res.json(guestOrder + orders);
 
 
     } catch (e) {
