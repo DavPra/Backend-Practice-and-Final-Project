@@ -55,7 +55,13 @@ async function getProducts() {
     return result
 }   // Ausgabe aller Produkte
 
-async function getProductLagerstand(id) {
+async function getAvailableProducts() {
+    const result = await products.findAll({where: {Lagerstand: {[Sequelize.Op.gt]: 0}}})
+    return result
+}   // Ausgabe aller Produkte mit Lagerstand > 0
+
+
+async function checkProductLagerstand(id) {
     const result = await products.findByPk(id)
     return result.Lagerstand
 }   // Ausgabe des Lagerstands eines Produkts anhand der ID
@@ -133,7 +139,8 @@ module.exports = {
     getOrdersbyUser,
     getOrders,
     orderProduct,
-    getProductLagerstand,
+    checkProductLagerstand,
     orderProductsDetails,
-    getOrderDetailsbyId
+    getOrderDetailsbyId,
+    getAvailableProducts
 }

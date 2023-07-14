@@ -4,7 +4,7 @@ const router = express.Router();
 const db = require('../services/database');
 
 router.get('/products', async (req, res) => {
-    const products = await db.getProducts();
+    const products = await db.getAvailableProducts();
     res.json(products);
 }
 );

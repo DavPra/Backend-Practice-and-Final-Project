@@ -81,6 +81,25 @@ router.patch('/orders/:id', passport.authenticate('jwt', { session: false }),
     }
 );
 
+router.get('/allProducts', passport.authenticate('jwt', { session: false }),
+    async (req, res) => {
+        try {
+            const adminStatus = req.user.admin;
+            if (adminStatus === true) {
+                db.getProducts().then((products) => {
+                    res.json(products);
+                });
+            } else {
+                res.json({ message: 'Only admins may access this route.' });
+            }
+        } catch (e) {
+            console.log(e);
+            res.status(500).send('Something went wrong');
+        }
+
+    }
+);
+
 router.patch('/products', passport.authenticate('jwt', { session: false }),
     async (req, res) => {
         try {
