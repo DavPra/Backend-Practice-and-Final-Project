@@ -100,13 +100,13 @@ router.get('/allProducts', passport.authenticate('jwt', { session: false }),
     }
 );
 
-router.patch('/products', passport.authenticate('jwt', { session: false }),
+router.patch('/products/:id', passport.authenticate('jwt', { session: false }),
     async (req, res) => {
         try {
             const adminStatus = req.user.admin;
             if (adminStatus === true) {
                 
-                    const products = await db.updateProducts(req.body);
+                    const products = await db.updateProducts(req.params.id, req.body);
                     res.json(products);
 
             } else {
