@@ -20,6 +20,21 @@ router.get('/userOrders', passport.authenticate('jwt', { session: false }),
     }
 );
 
+router.get('/userOrders/details', passport.authenticate('jwt', { session: false }),
+    async (req, res) => {
+        try {
+            const id = req.params.id;
+            const orderDetails = await database.orderProductsDetails(id);
+            res.json(orderDetails);
+
+        } catch (e) {
+            console.log(e);
+            res.status(500).send('Something went wrong');
+        }
+    }
+);
+
+
 router.post('/userOrders', passport.authenticate('jwt', { session: false }),
     async (req, res) => {
         try {
