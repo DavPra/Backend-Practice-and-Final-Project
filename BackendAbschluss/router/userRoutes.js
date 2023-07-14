@@ -37,6 +37,9 @@ router.post('/userOrders', passport.authenticate('jwt', { session: false }),
 
 router.post('/order', passport.authenticate('jwt', { session: false }),
     async (req, res) => {
+    const lagerstand = await database.getLagerstand(req.body);
+    if (lagerstand > 0) {
+
         try {
             const id = req.user.id;
             const orders = await database.orderProduct(id);
@@ -48,7 +51,10 @@ router.post('/order', passport.authenticate('jwt', { session: false }),
             console.log(e);
             res.status(500).send('Something went wrong');
         }
+    } else {
+        res.json({ message: 'Product is not available' });
     }
+}
 );
 
 router.post('/guestOrder', async (req, res) => {
