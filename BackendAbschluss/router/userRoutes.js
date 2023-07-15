@@ -51,26 +51,59 @@ router.post('/userOrders', passport.authenticate('jwt', { session: false }),
 );
 
 router.post('/order', passport.authenticate('jwt', { session: false }),
+    
     async (req, res) => {
-    const lagerstand = await database.getLagerstand(req.body);
-    if (lagerstand > 0) {
+    
+    const userID = req.user.id;
+    const jsonInput = '[{"productId": 1, "quantity": 2}, {"productId": 2, "quantity": 3}]'
 
         try {
-            const id = req.user.id;
-            const orders = await database.orderProduct(id);
-            const orderProducts = await database.orderProducts(id);
-            res.json(orders + orderProducts);
 
+            let orderProducts = JSON.parse(jsonInput);
+            let lagerstand = database.checkAvailability(orderProducts.id);
 
+            for (let i = 0; i < orderProducts.length; i++){
+
+                if (lagerstand >= orderProducts.quantity) {
+
+                    const orders = await database.orderProduct(orderProducts);
+
+                    for (let i = 0; i < orderProducts.length; i++) {
+                        const product = orderProducts[i];
+                        const lagerstand = database.checkAvailability(product.id);
+                        const newLagerstand = lagerstand - product.quantity;
+                        database.updateLagerstand(product.id, newLagerstand);
+                    }
+                    const orderDetails = await database.orderProductsDetails(orderProducts);
+                    res.json(orders);
+                return true;
+                } else {
+                   res.json({ message: 'Not enough products in stock' });
+                return false;
+                }
+            }
         } catch (e) {
-            console.log(e);
+            console.error(e);
             res.status(500).send('Something went wrong');
-        }
-    } else {
-        res.json({ message: 'Product is not available' });
     }
 }
 );
+
+
+try {
+  const orderProducts = JSON.parse(jsonInput);
+  checkProductStock(orderProducts);
+} catch (error) {
+  console.error('Error parsing JSON input:', error);
+}
+
+
+
+
+
+
+
+
 
 router.post('/guestOrder', async (req, res) => {
     try {
