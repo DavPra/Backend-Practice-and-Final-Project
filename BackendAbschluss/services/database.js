@@ -4,6 +4,7 @@ const Users = require('../models/users')
 const orders = require('../models/orders')
 const guestUsers = require('../models/guestUsers')
 const orderProducts = require('../models/orderProducts')
+const allUsers = require('../models/allUsers')
 const { Sequelize } = require('sequelize')
 const sequelize = require('./sequelize')
 
@@ -11,13 +12,15 @@ async function createUser({Name, email, password, telNum, strasse, ort, plz}) {
     const hash = await bcrypt.hash(password, 10)
 
     const user =  await Users.create({Name: Name, Email:email, Password: hash, Telefonnummer: telNum, Strasse: strasse, Ort: ort, Postleitzahl: plz, Admin: 1}) 
-    return {id: user.id, Name: user.Name, Email: user.Email, Telefonnummer: user.Telefonnummer, Strasse: user.Strasse, Ort: user.Ort, Postleitzahl: user.Postleitzahl, Admin: user.Admin}
+    const allUser = await allUsers.create({Name: Name, Email:email, Password: hash, Telefonnummer: telNum, Strasse: strasse, Ort: ort, Postleitzahl: plz, Admin: 1})
+    return {id: allUser.id, Name: user.Name, Email: user.Email, Telefonnummer: user.Telefonnummer, Strasse: user.Strasse, Ort: user.Ort, Postleitzahl: user.Postleitzahl, Admin: user.Admin}
 }   // Registrierung eines neuen Users, Passwort wird gehashed
 
 async function createGuser({Name, email, telNum, strasse, ort, plz}) {
 
-    const user =  await guestUsers.create({Name: Name, Email:email, Password: hash, Telefonnummer: telNum, Strasse: strasse, Ort: ort, Postleitzahl: plz, Admin: 1})
-    return {id: user.id, Name: user.Name, Email: user.Email, Telefonnummer: user.Telefonnummer, Strasse: user.Strasse, Ort: user.Ort, Postleitzahl: user.Postleitzahl, Admin: user.Admin}
+    const user =  await guestUsers.create({Name: Name, Email:email, Telefonnummer: telNum, Strasse: strasse, Ort: ort, Postleitzahl: plz, Admin: 1})
+    const allUser = await allUsers.create({Name: Name, Email:email, Telefonnummer: telNum, Strasse: strasse, Ort: ort, Postleitzahl: plz, Admin: 1})
+    return {id: allUser.id, Name: user.Name, Email: user.Email, Telefonnummer: user.Telefonnummer, Strasse: user.Strasse, Ort: user.Ort, Postleitzahl: user.Postleitzahl, Admin: user.Admin}
 }   // Speicher der Daten eines neuen Gastusers
 
 async function getUsers() {
@@ -113,6 +116,11 @@ async function getguestUsers() {
     return result
 }   // Ausgabe aller Gastuser
 
+async function getAllUsers() {
+    const result = await allUsers.findAll()
+    return result
+}   // Ausgabe aller User
+
 async function getOrders() {
     const result = await orders.findAll()
     return result
@@ -146,5 +154,6 @@ module.exports = {
     orderProductsDetails,
     getOrderDetailsbyId,
     checkAvailability,
-    updateLagerstand
+    updateLagerstand,
+    getAllUsers
 }

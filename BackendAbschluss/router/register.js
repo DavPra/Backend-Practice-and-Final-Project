@@ -9,7 +9,7 @@ router.post('/register', async (req, res) => {
 })
 
 router.post('/Gregister', async (req, res) => {
-    const user = await db.createGUser(req.body)
+    const user = await db.createGuser(req.body)
     res.json(user)
 })
 
