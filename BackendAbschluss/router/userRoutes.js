@@ -82,6 +82,7 @@ router.post('/order', passport.authenticate('jwt', { session: false }),
                     database.updateLagerstand(product.id, {"lagerstand": newLagerstand})
                 
                 }
+            }
                 
             if (notenoughstock === true) {
                 res.status(500).send('Not enough products in stock');
