@@ -4,6 +4,8 @@ const database = require('../services/database')
 const passport = require('passport')
 const jwtStrategy = require('../strategies/jwtStrategy')
 const jwt = require('../services/jwt')
+const { ConnectionAcquireTimeoutError } = require('sequelize')
+const e = require('express')
 
 router.get('/userOrders', passport.authenticate('jwt', { session: false }),
     async (req, res) => {
@@ -52,41 +54,46 @@ router.post('/userOrders', passport.authenticate('jwt', { session: false }),
 
 router.post('/order', passport.authenticate('jwt', { session: false }),
     
-    async (req, res) => {
+    async (req,res) => {
     
     const userID = req.user.id;
-    const jsonInput = '[{"productId": 1, "quantity": 2}, {"productId": 2, "quantity": 3}]'
 
+    const orderProducts = []
+    const orderLength = req.body.length
+    let a = 0
+    var lagerstand = []
+    var notenoughstock = false
         try {
-
-            let orderProducts = JSON.parse(jsonInput);
-            let lagerstand = database.checkAvailability(orderProducts.id);
-
-            for (let i = 0; i < orderProducts.length; i++){
-
-                if (lagerstand >= orderProducts.quantity) {
-
-                    const orders = await database.orderProduct(orderProducts);
-
-                    for (let i = 0; i < orderProducts.length; i++) {
-                        const product = orderProducts[i];
-                        const lagerstand = database.checkAvailability(product.id);
-                        const newLagerstand = lagerstand - product.quantity;
-                        database.updateLagerstand(product.id, newLagerstand);
-                    }
-                    const orderDetails = await database.orderProductsDetails(orderProducts);
-                    res.json(orders);
-                return true;
-                } else {
-                   res.json({ message: 'Not enough products in stock' });
-                return false;
+            for(let i = 0; i < orderLength; i++) {
+                lagerstand[i] = await database.checkAvailability(req.body[i].id)
+                if (lagerstand[i] < req.body[i].quantity) {
+                    notenoughstock = true;
                 }
+                console.log(lagerstand,notenoughstock)
             }
-        } catch (e) {
-            console.error(e);
-            res.status(500).send('Something went wrong');
+            if (notenoughstock === false) {
+                for (let i = 0; i < orderLength; i++) {
+                    await database.orderProduct(userID);
+                    let product = req.body[i]
+                    console.log(product)
+                    let newLagerstand = lagerstand[i] - product.quantity
+                    console.log(newLagerstand)
+                    console.log(product.id)
+                    database.updateLagerstand(product.id, {"lagerstand": newLagerstand})
+                
+                }
+                
+            if (notenoughstock === true) {
+                res.status(500).send('Not enough products in stock');
+            }
+            else {
+                res.status(200).send('Success'); // Send a response if needed         
+            }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Something went wrong');
     }
-}
+}   
 );
 
 

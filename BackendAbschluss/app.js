@@ -7,6 +7,7 @@ const products = require('./router/products');
 const users = require('./router/userRoutes');
 const adminRoutes = require('./router/adminRoutes');
 const jwtTest = require('./router/jwtTest');
+const orderTest = require('./router/ordertest');
 
 const passport = require('passport')
 const localStrategy = require('./strategies/localstrategy')
@@ -25,6 +26,7 @@ app.use(products);
 app.use(users);
 app.use(adminRoutes);
 app.use(jwtTest);
+app.use(orderTest);
 
 
 app.listen(3000, () => {

@@ -1,5 +1,8 @@
-const { OrderProduct, Product, Order } = require('./models');
-const passport = require('passport');
+const express = require('express')
+const jwt = require('../services/jwt')
+const passport = require ('passport')
+const router = express.Router()
+const db = require('../services/database')
 
 async function createOrderProducts(req, products) {
   try {
@@ -40,3 +43,51 @@ const products = [
 ];
 
 createOrderProducts(orderId, userId, products);
+
+router.post('/orderTest', passport.authenticate('jwt', { session: false }),
+    
+    async (req, res) => {
+
+      let b = req.body
+      console.log(b);
+      res.send(b);
+    }
+);
+
+router.get('/orderTest/:id', passport.authenticate('jwt', { session: false }),
+    async (req, res) => {
+      const productTest = await db.getProductsById(req.params.id);
+      res.json(productTest);
+    }
+);
+
+router.post('/orderTestav', passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    try {
+      let a = 0;
+      let b = req.body;
+      console.log(b);
+
+      for (let i = 0; i < b.length; i++) {
+        a = await db.checkAvailability(b[i].id); // Assuming db.checkAvailability returns a promise
+        console.log(a);
+
+        if (i === b.length - 1) {
+          break;
+        }
+      }
+
+      // Add any additional code logic here
+
+      res.status(200).send('Success'); // Send a response if needed
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Something went wrong');
+    }
+  }
+);
+
+
+
+
+module.exports = router;

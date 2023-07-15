@@ -23,7 +23,7 @@ const orders = sequelize.define('orders', {
 
 }
 }, {
-    timestamps: true,
+    timestamps: false,
     freezeTableName: true,
     createdAt: true
 })

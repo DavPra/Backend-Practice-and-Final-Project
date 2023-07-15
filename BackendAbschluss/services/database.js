@@ -60,6 +60,15 @@ async function checkAvailability(id) {
     return result.Lagerstand
 }   // Ausgabe des Lagerstands eines Produkts anhand der ID
 
+async function updateLagerstand(id, {lagerstand}) {
+    const result = await products.update({Lagerstand: lagerstand}, {
+        where: {
+            id: id
+        }
+    })
+    return result
+}   // Updaten des Lagerstands eines Produkts anhand der ID
+
 
 async function getProductsById(id) {
     const result = await products.findByPk(id)
@@ -136,5 +145,6 @@ module.exports = {
     orderProduct,
     orderProductsDetails,
     getOrderDetailsbyId,
-    checkAvailability
+    checkAvailability,
+    updateLagerstand
 }
