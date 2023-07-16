@@ -21,7 +21,7 @@ const Users = sequelize.define('users',{
         type: Sequelize.DataTypes.STRING,
         allowNull: false
     },
-    street: {
+    strasse: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false
     },

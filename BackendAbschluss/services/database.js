@@ -8,18 +8,20 @@ const allUsers = require('../models/allUsers')
 const { Sequelize } = require('sequelize')
 const sequelize = require('./sequelize')
 
-async function createUser({Name, email, password, telNum, strasse, ort, plz}) {
+
+
+async function createUser({name, email, password, telNum, strasse, ort, plz}) {
     const hash = await bcrypt.hash(password, 10)
 
-    const user =  await Users.create({Name: Name, Email:email, Password: hash, Telefonnummer: telNum, Strasse: strasse, Ort: ort, Postleitzahl: plz, Admin: 1}) 
-    const allUser = await allUsers.create({Name: Name, Email:email, Password: hash, Telefonnummer: telNum, Strasse: strasse, Ort: ort, Postleitzahl: plz, Admin: 1})
-    return {id: allUser.id, Name: user.Name, Email: user.Email, Telefonnummer: user.Telefonnummer, Strasse: user.Strasse, Ort: user.Ort, Postleitzahl: user.Postleitzahl, Admin: user.Admin}
+    const user =  await Users.create({name: name, email:email, password: hash, telNumber: telNum, strasse: strasse, ort: ort, plz: plz, admin: 0}) 
+    const allUser = await allUsers.create({name: name, email:email, password: hash, telNumber: telNum, strasse: strasse, ort: ort, plz: plz, admin: 0})
+    return {name: user.name, email: user.email, telNumber: user.telNumber, strasse: user.strasse, ort: user.ort, plz: user.plz}
 }   // Registrierung eines neuen Users, Passwort wird gehashed
 
 async function createGuser({Name, email, telNum, strasse, ort, plz}) {
 
-    const user =  await guestUsers.create({Name: Name, Email:email, Telefonnummer: telNum, Strasse: strasse, Ort: ort, Postleitzahl: plz, Admin: 1})
-    const allUser = await allUsers.create({Name: Name, Email:email, Telefonnummer: telNum, Strasse: strasse, Ort: ort, Postleitzahl: plz, Admin: 1})
+    const user =  await guestUsers.create({Name: Name, Email:email, Telefonnummer: telNum, Strasse: strasse, Ort: ort, Postleitzahl: plz, Admin: 0})
+    const allUser = await allUsers.create({Name: Name, Email:email, Telefonnummer: telNum, Strasse: strasse, Ort: ort, Postleitzahl: plz, Admin: 0})
     return {id: allUser.id, Name: user.Name, Email: user.Email, Telefonnummer: user.Telefonnummer, Strasse: user.Strasse, Ort: user.Ort, Postleitzahl: user.Postleitzahl, Admin: user.Admin}
 }   // Speicher der Daten eines neuen Gastusers
 
@@ -46,7 +48,7 @@ async function findUserByCredetials({email, password}) {
     if (!isMatch) {
         throw new Error('Password not correct')
     }
-    return user
+    return {name: user.name, email: user.email, telNumber: user.telNumber, strasse: user.strasse, ort: user.ort, plz: user.plz}
 }   // Ausgabe eines Users anhand der Email und des Passworts
 
 async function addProducts({titel, genre, typ, länge, preis, regisseur, lagerstand}) {

@@ -21,7 +21,7 @@ const allUsers = sequelize.define('allUsers',{
         type: Sequelize.DataTypes.STRING,
         allowNull: false
     },
-    street: {
+    strasse: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false
     },
