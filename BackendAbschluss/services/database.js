@@ -22,7 +22,7 @@ async function createGuser({name, email, telNum, strasse, ort, plz}) {
 
     const user =  await guestUsers.create({name: name, email:email, telNumber: telNum, strasse: strasse, ort: ort, plz: plz, admin: 0}) 
     const allUser = await allUsers.create({name: name, email:email, telNumber: telNum, strasse: strasse, ort: ort, plz: plz, admin: 0})
-    return {name: user.name, email: user.email, telNumber: user.telNumber, strasse: user.strasse, ort: user.ort, plz: user.plz}
+    return {id: allUser.id, name: user.name, email: user.email, telNumber: user.telNumber, strasse: user.strasse, ort: user.ort, plz: user.plz}
 }   // Speicher der Daten eines neuen Gastusers
 
 async function getUsers() {
@@ -52,6 +52,19 @@ async function findUserByCredetials({email, password}) {
     return {name: user.name, email: user.email, telNumber: user.telNumber, strasse: user.strasse, ort: user.ort, plz: user.plz, registerID: allUser.registerID}
 }   // Ausgabe eines Users anhand der Email und des Passworts
 
+/*async function findUserByCredetials({email, password}) {
+    const user = await allUsers.findOne({where: {email: email}})
+    const allUser = await allUsers.findOne({where: {registerID: user.id}})
+    if (!user) {
+        throw new Error('User not found')
+    }
+    const isMatch = await bcrypt.compare(password, user.password)
+    if (!isMatch) {
+        throw new Error('Password not correct')
+    }
+    return {name: user.name, email: user.email, telNumber: user.telNumber, strasse: user.strasse, ort: user.ort, plz: user.plz, registerID: allUser.registerID}
+}   // Ausgabe eines Users anhand der Email und des Passworts */
+
 async function addProducts({titel, genre, typ, länge, preis, regisseur, lagerstand}) {
     return products.create({Titel: titel, Genre: genre, Typ: typ, Länge: länge, Preis: preis, Regisseur: regisseur, Lagerstand: lagerstand})
 }  // Hinzufügen eines neuen Produkts
@@ -63,6 +76,7 @@ async function getProducts() {
 
 async function checkAvailability(id) {
     const result = await products.findByPk(id)
+    console.log("10 " + result)
     return result.Lagerstand
 }   // Ausgabe des Lagerstands eines Produkts anhand der ID
 
@@ -104,10 +118,10 @@ async function orderProduct(id) {
     return order
 }   // Bestellung aufgeben
 
-async function orderProductsDetails(id, productID) {
-    const result = await orderProducts.create({OrderId: id, ProductID: productID, Quantity: quantity})
+async function orderProductsDetails(id, productId, quantity) {
+    const result = await orderProducts.create({OrderId: id, ProductId: productId, Quantity: quantity})
     return result
-}   // Bestellung aufgeben
+}   // Bestellungdetails aufgeben
 
 async function getOrdersbyUser(id) {
     const result = await orders.findAll({where: {UserId: id}})
@@ -129,10 +143,10 @@ async function getOrders() {
     return result
 }   // Ausgabe aller Bestellungen
 
-async function getOrdersbyUser(id) {
-    const result = await orders.findAll({where: {UserId: id}})
-    return result
-}   // Ausgabe aller Bestellungen eines Users anhand der UserID
+//async function getOrdersbyUser(id) {
+  //  const result = await orders.findAll({where: {UserId: id}})
+    //return result
+//}   // Ausgabe aller Bestellungen eines Users anhand der UserID
 
 async function getOrderDetailsbyId(id) {
     const result = await orderProducts.findAll({where: {id: id}})

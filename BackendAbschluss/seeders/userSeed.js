@@ -12,7 +12,7 @@ module.exports = {
             email: 'thomas@test.com',
             password: bcrypt.hashSync(thomasPW, 10),	
             telNumber: '0123456789',
-            street: 'Teststreet 1',
+            strasse: 'Teststreet 1',
             ort: 'Testort 1',
             plz: '12345',
             admin: false
@@ -22,7 +22,7 @@ module.exports = {
         email: 'fabia@farbe.com',
         password: bcrypt.hashSync(fabiaPW, 10),
         telNumber: '0123456789',
-        street: 'Teststreet 2',
+        strasse: 'Teststreet 2',
         ort: 'Testort 2',
         plz: '123456',
         admin: false
@@ -32,7 +32,7 @@ module.exports = {
         email: 'harald@hase.com',
         password: bcrypt.hashSync(haraldPW, 10),
         telNumber: '0123456789',
-        street: 'Teststreet 3',
+        strasse: 'Teststreet 3',
         ort: 'Testort 3',
         plz: '1234567',
         admin: false

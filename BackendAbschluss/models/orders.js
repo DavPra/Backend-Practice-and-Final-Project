@@ -1,6 +1,7 @@
 const sequelize = require('../services/sequelize')
 const Sequelize = require('sequelize')
 const Users = require('./users')
+const allUsers = require('./allUsers')
 
 const orders = sequelize.define('orders', {
     OrderStatus: {
@@ -17,11 +18,19 @@ const orders = sequelize.define('orders', {
             notEmpty: true
         },
         references: {
-            model: Users,
+            model: allUsers,
             key: 'id'
     }
 
-}
+    },
+   /* OrderId: {
+        type: Sequelize.DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        },
+    }*/
+
 }, {
     timestamps: false,
     freezeTableName: true,

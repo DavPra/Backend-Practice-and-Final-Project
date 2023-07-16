@@ -87,6 +87,19 @@ router.post('/orderTestav', passport.authenticate('jwt', { session: false }),
   }
 );
 
+router.get('/orderTestav/:id', async (req, res) => {
+    try {
+      const a = await db.checkAvailability(req.params.id);
+      console.log(a.Lagerstand);
+      res.status(200).send('Success');
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Something went wrong');
+    }
+  }
+);
+
+
 
 
 

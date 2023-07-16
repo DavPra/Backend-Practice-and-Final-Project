@@ -1,4 +1,4 @@
-module.exports = {
+/*module.exports = {
     up: (queryInterface, Sequelize) => {
         return queryInterface.bulkInsert('orders', [{
             OrderDate: '2020-01-01',
@@ -22,4 +22,4 @@ module.exports = {
     down: (queryInterface, Sequelize) => {
         return queryInterface.bulkDelete('guestUsers', null, {});
     }
-};
+};*/

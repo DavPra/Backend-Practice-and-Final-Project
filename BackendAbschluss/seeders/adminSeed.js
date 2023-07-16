@@ -11,7 +11,7 @@ module.exports = {
             email: 'admin@admin.com',
             password: hash,
             telNumber: '0123456789',
-            street: 'Adminstreet',
+            strasse: 'Adminstreet',
             ort: 'Adminort',
             plz: '12345',
             admin: true

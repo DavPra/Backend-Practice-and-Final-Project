@@ -10,10 +10,10 @@ const orderProducts = sequelize.define('orderProducts', {
         validate: {
             notEmpty: true
         },
-        references: {
+        /*references: {
             model: orders,
             key: 'id'
-        }
+        }*/
     },
     ProductId: {
         type: Sequelize.DataTypes.INTEGER,
@@ -21,10 +21,10 @@ const orderProducts = sequelize.define('orderProducts', {
         validate: {
             notEmpty: true
         },
-        references: {
+        /*references: {
             model: products,
             key: 'id'
-        }
+        }*/
     },
     Quantity: {
         type: Sequelize.DataTypes.INTEGER,
