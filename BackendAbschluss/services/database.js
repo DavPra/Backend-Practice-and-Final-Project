@@ -5,7 +5,7 @@ const orders = require('../models/orders')
 const guestUsers = require('../models/guestUsers')
 const orderProducts = require('../models/orderProducts')
 const allUsers = require('../models/allUsers')
-const { Sequelize } = require('sequelize')
+const { Sequelize, where } = require('sequelize')
 const sequelize = require('./sequelize')
 
 
@@ -49,7 +49,7 @@ async function findUserByCredetials({email, password}) {
     if (!isMatch) {
         throw new Error('Password not correct')
     }
-    return {name: user.name, email: user.email, telNumber: user.telNumber, strasse: user.strasse, ort: user.ort, plz: user.plz, registerID: allUser.registerID}
+    return {name: user.name, email: user.email, telNumber: user.telNumber, strasse: user.strasse, ort: user.ort, plz: user.plz, registerID: allUser.registerID, admin: allUser.admin}
 }   // Ausgabe eines Users anhand der Email und des Passworts
 
 /*async function findUserByCredetials({email, password}) {
@@ -76,7 +76,7 @@ async function getProducts() {
 
 async function checkAvailability(id) {
     const result = await products.findByPk(id)
-    console.log("10 " + result)
+    //console.log("10 " + result)
     return result.Lagerstand
 }   // Ausgabe des Lagerstands eines Produkts anhand der ID
 
@@ -143,13 +143,33 @@ async function getOrders() {
     return result
 }   // Ausgabe aller Bestellungen
 
+async function deleteOrderedProducts(id) {
+    const result = await orderProducts.destroy({where: {OrderId: id}})
+
+    return result
+}   // Ausgabe der zu Löschenden bestellten Produkte 
+
+async function deleteOrders(id) {
+    const result = await orders.destroy({where: {id: id}})
+    return result
+}   // Ausgabe der zu löschenden Bestellung
+
+async function updateOrders(id, orderStatus) {
+    const result = await orders.update({OrderStatus: orderStatus}, {
+        where: {
+            id: id
+        }
+    })
+    return result
+}   // Updaten des Lagerstands eines Produkts anhand der ID
+
 //async function getOrdersbyUser(id) {
   //  const result = await orders.findAll({where: {UserId: id}})
     //return result
 //}   // Ausgabe aller Bestellungen eines Users anhand der UserID
 
 async function getOrderDetailsbyId(id) {
-    const result = await orderProducts.findAll({where: {id: id}})
+    const result = await orderProducts.findAll({where: {OrderId: id}})
     return result
 }   // Ausgabe aller Bestellungen anhand der OrderID
 
@@ -172,5 +192,8 @@ module.exports = {
     getOrderDetailsbyId,
     checkAvailability,
     updateLagerstand,
-    getAllUsers
+    getAllUsers,
+    deleteOrders,
+    deleteOrderedProducts,
+    updateOrders
 }
