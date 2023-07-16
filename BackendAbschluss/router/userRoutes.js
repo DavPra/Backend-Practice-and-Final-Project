@@ -22,11 +22,11 @@ router.get('/userOrders', passport.authenticate('jwt', { session: false }),
     }
 );
 
-router.get('/userOrders/details', passport.authenticate('jwt', { session: false }),
+router.get('/userOrders/details/:orderID', passport.authenticate('jwt', { session: false }),
     async (req, res) => {
         try {
-            const id = req.params.registerID;
-            const orderDetails = await database.orderProductsDetails(id);
+            const id = req.params.orderID;
+            const orderDetails = await database.getOrderDetailsbyId(id);
             res.json(orderDetails);
 
         } catch (e) {
@@ -37,7 +37,7 @@ router.get('/userOrders/details', passport.authenticate('jwt', { session: false 
 );
 
 
-router.post('/userOrders', passport.authenticate('jwt', { session: false }),
+/*router.post('/userOrders', passport.authenticate('jwt', { session: false }),
     async (req, res) => {
         try {
             const id = req.user.registerID;
@@ -50,7 +50,7 @@ router.post('/userOrders', passport.authenticate('jwt', { session: false }),
             res.status(500).send('Something went wrong');
         }
     }
-);
+);*/
 
 router.post('/order', passport.authenticate('jwt', { session: false }),
     
@@ -59,29 +59,42 @@ router.post('/order', passport.authenticate('jwt', { session: false }),
     const userID = req.user.registerID;
 
     //const orderProducts = []
-    const orderLength = req.body.length
+    let orderLength = req.body.orderedProducts.length 
+    if (orderLength === undefined) {
+        orderLength = 1
+    }
+
+    console.log("1 " + orderLength)
+    const orderedP = req.body.orderedProducts
+
+    console.log( req.body.orderedProducts)
+    console.log("2 " + orderedP[0].id)
     //let a = 0
     var lagerstand = []
     var notenoughstock = false
         try {
             for(let i = 0; i < orderLength; i++) {
-                lagerstand[i] = await database.checkAvailability(req.body[i].id)
-                if (lagerstand[i] < req.body[i].quantity) {
+                //console.log("11 " + orderedProducts[i].ProductId)
+                lagerstand[i] = await database.checkAvailability(orderedP[i].id)
+                console.log("11 " + lagerstand[i])
+                if (lagerstand[i] < orderedP[i].quantity) {
                     notenoughstock = true;
                 }
-                console.log(lagerstand,notenoughstock)
+                console.log("5 " + lagerstand,notenoughstock)
             }
             if (notenoughstock === false) {
-                await database.orderProduct(userID);
+                let orderID = await database.orderProduct(userID);
                 for (let i = 0; i < orderLength; i++) {
-                    
-                    let product = req.body[i]
-                    console.log(product)
+                    console.log(orderID)
+                    let product = orderedP[i]
+                    console.log("6 " + product) 
                     let newLagerstand = lagerstand[i] - product.quantity
-                    console.log(newLagerstand)
-                    console.log(product.id)
+                    console.log("7 " + newLagerstand)
+                    console.log("8 " + product.id)
+                    console.log("9 " + product.quantity)
+                    console.log(product)    
                     database.updateLagerstand(product.id, {"lagerstand": newLagerstand})
-                
+                    database.orderProductsDetails(orderID.id, product.id, product.quantity)
                 }
             }
                 
@@ -172,7 +185,7 @@ router.post('/Gorder',
 
 
 
-router.post('/guestOrder', async (req, res) => {
+/*router.post('/guestOrder', async (req, res) => {
     try {
         const guestOrder = await database.createGuser(req.body);
         const orders = await database.orderProduct(req.body);
@@ -184,7 +197,7 @@ router.post('/guestOrder', async (req, res) => {
         res.status(500).send('Something went wrong');
     }
 }
-);
+);*/
 
 
 
