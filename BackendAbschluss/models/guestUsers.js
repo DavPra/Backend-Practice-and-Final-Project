@@ -1,49 +1,40 @@
 const sequelize = require('../services/sequelize')
 const Sequelize = require('sequelize')
 
-const guestUsers = sequelize.define('guestUsers', {
-    Name : {
+const guestUsers = sequelize.define('guestUsers',{
+    name: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false
+    },
+    email: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,
         validate: {
-            notEmpty: true,
+            isEmail: true
         }
     },
-    Strasse : {
+    telNumber: {
         type: Sequelize.DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            notEmpty: true,
-        }
+        allowNull: false
     },
-    Ort : {
+    strasse: {
         type: Sequelize.DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            notEmpty: true,
-        }
+        allowNull: false
     },
-    PlZ : {
-        type: Sequelize.DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-            notEmpty: true,
-        }
-    },
-    Email : {
+    ort: {
         type: Sequelize.DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            notEmpty: true,
-        }
+        allowNull: false
     },
-    TelNmr : {
-        type: Sequelize.DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-            notEmpty: true,
-        }
+    plz: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false
     },
+    admin: {
+        type: Sequelize.DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+    }
+    
 }, {
     timestamps: false,
     freezeTableName: true

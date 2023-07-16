@@ -58,9 +58,9 @@ router.post('/order', passport.authenticate('jwt', { session: false }),
     
     const userID = req.user.id;
 
-    const orderProducts = []
+    //const orderProducts = []
     const orderLength = req.body.length
-    let a = 0
+    //let a = 0
     var lagerstand = []
     var notenoughstock = false
         try {

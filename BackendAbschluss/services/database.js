@@ -14,15 +14,15 @@ async function createUser({name, email, password, telNum, strasse, ort, plz}) {
     const hash = await bcrypt.hash(password, 10)
 
     const user =  await Users.create({name: name, email:email, password: hash, telNumber: telNum, strasse: strasse, ort: ort, plz: plz, admin: 0}) 
-    const allUser = await allUsers.create({name: name, email:email, password: hash, telNumber: telNum, strasse: strasse, ort: ort, plz: plz, admin: 0})
-    return {name: user.name, email: user.email, telNumber: user.telNumber, strasse: user.strasse, ort: user.ort, plz: user.plz}
+    const allUser = await allUsers.create({name: name, email:email, password: hash, telNumber: telNum, strasse: strasse, ort: ort, plz: plz, registerID: user.id, admin: 0})
+    return {id: allUser.id, name: user.name, email: user.email, telNumber: user.telNumber, strasse: user.strasse, ort: user.ort, plz: user.plz}
 }   // Registrierung eines neuen Users, Passwort wird gehashed
 
-async function createGuser({Name, email, telNum, strasse, ort, plz}) {
+async function createGuser({name, email, telNum, strasse, ort, plz}) {
 
-    const user =  await guestUsers.create({Name: Name, Email:email, Telefonnummer: telNum, Strasse: strasse, Ort: ort, Postleitzahl: plz, Admin: 0})
-    const allUser = await allUsers.create({Name: Name, Email:email, Telefonnummer: telNum, Strasse: strasse, Ort: ort, Postleitzahl: plz, Admin: 0})
-    return {id: allUser.id, Name: user.Name, Email: user.Email, Telefonnummer: user.Telefonnummer, Strasse: user.Strasse, Ort: user.Ort, Postleitzahl: user.Postleitzahl, Admin: user.Admin}
+    const user =  await guestUsers.create({name: name, email:email, telNumber: telNum, strasse: strasse, ort: ort, plz: plz, admin: 0}) 
+    const allUser = await allUsers.create({name: name, email:email, telNumber: telNum, strasse: strasse, ort: ort, plz: plz, admin: 0})
+    return {name: user.name, email: user.email, telNumber: user.telNumber, strasse: user.strasse, ort: user.ort, plz: user.plz}
 }   // Speicher der Daten eines neuen Gastusers
 
 async function getUsers() {
@@ -40,7 +40,8 @@ async function deleteUser(id) {
 }   // Löschen eines Users anhand der ID
 
 async function findUserByCredetials({email, password}) {
-    const user = await Users.findOne({where: {Email: email}})
+    const user = await Users.findOne({where: {email: email}})
+    const allUser = await allUsers.findOne({where: {registerID: user.id}})
     if (!user) {
         throw new Error('User not found')
     }
@@ -48,7 +49,7 @@ async function findUserByCredetials({email, password}) {
     if (!isMatch) {
         throw new Error('Password not correct')
     }
-    return {name: user.name, email: user.email, telNumber: user.telNumber, strasse: user.strasse, ort: user.ort, plz: user.plz}
+    return {name: user.name, email: user.email, telNumber: user.telNumber, strasse: user.strasse, ort: user.ort, plz: user.plz, registerID: allUser.registerID}
 }   // Ausgabe eines Users anhand der Email und des Passworts
 
 async function addProducts({titel, genre, typ, länge, preis, regisseur, lagerstand}) {

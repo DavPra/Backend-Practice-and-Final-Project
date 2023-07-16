@@ -8,7 +8,7 @@ const options = {
 };
 
 const strategy = new JwtStrategy(options, (jwt, done) => {
-    const user = {id: jwt.id, name: jwt.name, email: jwt.email, admin: jwt.admin};
+    const user = {id: jwt.id, name: jwt.name, email: jwt.email, admin: jwt.admin, registerID: jwt.registerID};
     done(null, user);
 });
 

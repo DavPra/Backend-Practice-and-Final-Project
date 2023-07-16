@@ -33,6 +33,11 @@ const allUsers = sequelize.define('allUsers',{
         type: Sequelize.DataTypes.STRING,
         allowNull: false
     },
+    registerID: {
+        type: Sequelize.DataTypes.INTEGER,
+        allowNull: true
+    },
+    
     admin: {
         type: Sequelize.DataTypes.BOOLEAN,
         allowNull: false,
