@@ -1,0 +1,492 @@
+{
+	"info": {
+		"_postman_id": "8d225e45-dd28-46b4-863c-4122da44c0b5",
+		"name": "Abschluss Backend API Praschak",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27611126"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Name\",\r\n    \"email\": \"Email@email.com\",\r\n    \"password\": \"password\",\r\n    \"telNum\": \"1234567\",\r\n    \"strasse\": \"Street\",\r\n    \"ort\": \"City\",\r\n    \"plz\": \"Postcode\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"register"
+							]
+						},
+						"description": "Send userdata to register"
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"Email@email.com\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"login"
+							]
+						},
+						"description": "Send email and password for login."
+					},
+					"response": []
+				}
+			],
+			"description": "Login and Register"
+		},
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "deleteOrder",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/orders/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"orders",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						},
+						"description": "add corresponding orderID"
+					},
+					"response": []
+				},
+				{
+					"name": "allOrders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImFkbWluIjp0cnVlLCJyZWdpc3RlcklEIjoxLCJpYXQiOjE2ODk1OTUxNDEsImV4cCI6MTY5MjI3MzU0MX0.vHzIzYq2xiZ6V2b-zzoe6DRh9RyJNPi-22Un4ZkpIS0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/orders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"orders"
+							]
+						},
+						"description": "Send Admin token as BearerToken"
+					},
+					"response": []
+				},
+				{
+					"name": "updateOrder",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImFkbWluIjp0cnVlLCJyZWdpc3RlcklEIjoxLCJpYXQiOjE2ODk1OTUxNDEsImV4cCI6MTY5MjI3MzU0MX0.vHzIzYq2xiZ6V2b-zzoe6DRh9RyJNPi-22Un4ZkpIS0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"OrderStatus\" : \"offen/erledigt\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/orders/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"orders",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						},
+						"description": "Send corresponding orderID and change of order status."
+					},
+					"response": []
+				},
+				{
+					"name": "addProducts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImFkbWluIjp0cnVlLCJyZWdpc3RlcklEIjoxLCJpYXQiOjE2ODk1OTUxNDEsImV4cCI6MTY5MjI3MzU0MX0.vHzIzYq2xiZ6V2b-zzoe6DRh9RyJNPi-22Un4ZkpIS0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Titel\": \"Titel\",\r\n    \"Genre\": \"Genre\",\r\n    \"Typ\": \"BluRay/DVD\",\r\n    \"Länge\": Number (Int),\r\n    \"Preis\": Number (Int),\r\n    \"Regisseur\": \"Regisseur\",\r\n    \"Lagerstand\": Number (int)\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products"
+							]
+						},
+						"description": "Send product Details."
+					},
+					"response": []
+				},
+				{
+					"name": "updateProducts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImFkbWluIjp0cnVlLCJyZWdpc3RlcklEIjoxLCJpYXQiOjE2ODk1OTUxNDEsImV4cCI6MTY5MjI3MzU0MX0.vHzIzYq2xiZ6V2b-zzoe6DRh9RyJNPi-22Un4ZkpIS0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Titel\": \"Titel\",\r\n    \"Genre\": \"Genre\",\r\n    \"Typ\": \"BluRay/DVD\",\r\n    \"Länge\": Number (Int),\r\n    \"Preis\": Number (Int),\r\n    \"Regisseur\": \"Regisseur\",\r\n    \"Lagerstand\": Number (int)\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/products/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						},
+						"description": "Send corresponding productID and new product details"
+					},
+					"response": []
+				},
+				{
+					"name": "deleteProducts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImFkbWluIjp0cnVlLCJyZWdpc3RlcklEIjoxLCJpYXQiOjE2ODk1OTUxNDEsImV4cCI6MTY5MjI3MzU0MX0.vHzIzYq2xiZ6V2b-zzoe6DRh9RyJNPi-22Un4ZkpIS0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/products/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						},
+						"description": "Send corresponding productID"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTmFtZSIsImVtYWlsIjoiRW1haWxAZW1haWwuY29tIiwiYWRtaW4iOmZhbHNlLCJyZWdpc3RlcklEIjo5LCJpYXQiOjE2ODk1OTQ2NTcsImV4cCI6MTY5MjI3MzA1N30.vcGw7C86n0ICPoJ5QewzVl3dlJbwrzxLILa46aMd2fE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"orderedProducts\": [{\r\n    \"id\": 1,\r\n    \"quantity\": 2\r\n    }\r\n    ] \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/order",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"order"
+							]
+						},
+						"description": "Send productID and quantity of each product"
+					},
+					"response": []
+				},
+				{
+					"name": "products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products"
+							]
+						},
+						"description": "Get all products"
+					},
+					"response": []
+				},
+				{
+					"name": "productDetails",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/products/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						},
+						"description": "Send corresponding productID to get details"
+					},
+					"response": []
+				},
+				{
+					"name": "ordersByUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTmFtZSIsImVtYWlsIjoiRW1haWxAZW1haWwuY29tIiwiYWRtaW4iOmZhbHNlLCJyZWdpc3RlcklEIjo5LCJpYXQiOjE2ODk1OTU3NjgsImV4cCI6MTY5MjI3NDE2OH0.iE8J4F6TB7DGcz7UAv1uPBWDPBP6z2xgAAjOQUu_Osg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/userOrders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"userOrders"
+							]
+						},
+						"description": "Gets orders by User. UserID taken from token."
+					},
+					"response": []
+				},
+				{
+					"name": "orderDetails",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTmFtZSIsImVtYWlsIjoiRW1haWxAZW1haWwuY29tIiwiYWRtaW4iOmZhbHNlLCJyZWdpc3RlcklEIjo5LCJpYXQiOjE2ODk1OTU3NjgsImV4cCI6MTY5MjI3NDE2OH0.iE8J4F6TB7DGcz7UAv1uPBWDPBP6z2xgAAjOQUu_Osg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/userOrders/details/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"userOrders",
+								"details",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						},
+						"description": "Get order details by orderID"
+					},
+					"response": []
+				},
+				{
+					"name": "guestOrder",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"guestCredentials\": {\r\n        \"name\": \"Johnny Cash\", \r\n        \"email\": \"johnny@cash.com\", \r\n        \"telNum\": \"1234656\", \r\n        \"strasse\": \"JohnnyStraße\", \r\n        \"ort\": \"Cashdorf\", \r\n        \"plz\": \"420\"\r\n    },\r\n    \"orderedProducts\": [{\r\n    \"id\": 1,\r\n    \"quantity\": 1\r\n    },\r\n    {\r\n    \"id\": 2,\r\n    \"quantity\": 1\r\n    } ]  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/Gorder",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"Gorder"
+							]
+						},
+						"description": "Send credentials and order details for order without register."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
